@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzz.demo.dao.OrderDao">
+
+   <insert id="saveOrder" parameterType="com.zzz.demo.entity.Orders" useGeneratedKeys="true" keyProperty="id">
+       insert into orders (
+       <if test="userId!=null">
+           userId,
+       </if>
+       <if test="status!=null">
+           status,
+       </if>
+       <if test="price!=null">
+           price,
+       </if>
+       <if test="memo!=null">
+            memo,
+       </if>
+       <if test="couponId!=null">
+           couponId
+       </if>
+       )
+       values (
+       <if test="userId!=null">
+           #{userId},
+       </if>
+       <if test="status!=null">
+           #{status},
+       </if>
+       <if test="price!=null">
+           #{price},
+       </if>
+       <if test="memo!=null">
+           #{memo},
+       </if>
+       <if test="couponId!=null">
+           #{couponId}
+       </if>
+       )
+   </insert>
+
+    <insert id="executeSql">
+        ${sql}
+    </insert>
+
+    <delete id="delMyCart" parameterType="java.util.List">
+        delete from mycart where id in(
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item.id}
+        </foreach>
+        )
+    </delete>
+
+    <resultMap id="Orders" type="com.zzz.demo.reBack.OrderReBack">
+        <id column="id" property="id"></id>
+        <result column="status" property="status"></result>
+        <result column="price" property="price"></result>
+        <result column="memo" property="memo"></result>
+        <result column="addTime" property="addTime"></result>
+        <collection property="orderGoods" ofType="com.zzz.demo.reBack.OrderGoodsReback" column="id">
+            <id column="orderGoodsId" property="id"></id>
+            <result column="name" property="name"></result>
+            <result column="quantity" property="quantity"></result>
+            <result column="imgFir" property="imgFir"></result>
+            <result column="popOne" property="popOne"></result>
+            <result column="popTwo" property="popTwo"></result>
+        </collection>
+    </resultMap>
+    <select id="getOrders" parameterType="com.zzz.demo.requestBean.OrderQueryBean" resultMap="Orders">
+        select a.*,b.popOne,b.popTwo,b.quantity,c.imgFir,d.name from orders a left join ordergoods b on a.id=b.orderId left join goodsimage c on b.goodsId = c.goodsId left join goods d on b.goodsId=d.id where a.userId= #{userId}
+         <if test="status>0">
+             and status=#{status}
+         </if>
+          limit #{nowTotal},#{total}
+    </select>
+</mapper>

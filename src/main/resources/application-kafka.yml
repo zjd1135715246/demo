@@ -1,0 +1,23 @@
+kafkaCustom:
+# 单个消费的topic
+  kafkaSingleListenerList: UserAddress,CreateOrder,ReportOrder
+# 批量处理的topic
+  kafkaBatchListenerList: testBatch1,testBatch2
+# 自动提交时间间隔
+  autoCommitTime: 1000
+# 会话超时
+  sessionTimeout: 15000
+#一次最大处理消息数量
+  maxPollRecords: 5
+#并发量，需要小于等于分区数
+  concurrency: 2
+
+kafkaProduce:
+#重试，0为不启用重试机制
+  retries: 1
+#控制批处理大小，单位为字节
+  batchSize: 16384
+#批量发送，延迟为1毫秒，启用该功能能有效减少生产者发送消息次数，从而提高并发量
+  lingerMs: 1
+#生产者可以使用的总内存字节来缓冲等待发送到服务器的记录
+  bufferMemory: 1024000
