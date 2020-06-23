@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContextAware;
  */
 public class SingletonC {}
 
-//饿汉式（静态常量）
+//饿汉式（静态常量,线程安全）
 class Singleton1{
 
     private Singleton1(){}
@@ -23,7 +23,7 @@ class Singleton1{
         return INSTANCE;
     }
 }
-//饿汉式（静态代码块）
+//饿汉式（静态代码块,线程安全）
 class Singleton2{
 
     private Singleton2(){}
