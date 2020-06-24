@@ -40,7 +40,17 @@
 ###### windows清除登录缓存
 
 windows清除登录缓存：net use * /del /y
-    
+
+#####    bat
+
+###### bat打开文件夹
+
+```
+start "" "G:\test\demo\src\main\resources\md"
+```
+
+
+
 ### docker
 
 ###### 安装docker
