@@ -15,7 +15,7 @@ import java.util.Optional;
  * @author chenlingyu
  * @date 2020/5/14 18:59
  */
-@Component
+//@Component
 @Slf4j
 public class OrderConsumer {
 

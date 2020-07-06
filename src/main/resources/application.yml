@@ -13,13 +13,13 @@ spring:
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/jkdData?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/jkd?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
     devr:
       type: com.alibaba.druid.pool.DruidDataSource
       username: develop
       password: jkd123
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://127.0.0.1:3307/jkdData?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/jkd?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
     dynamic:
       druid:
         initial-size: 10
@@ -32,22 +32,22 @@ spring:
         test-while-idle: true
         test-on-borrow: false
         test-on-return: false
-  redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
-    password:
-    jedis:
-      pool:
-        ###连接池最大连接数
-        max-active: 8
-        ###连接池最大阻塞等待时间
-        max-wait: 10000
-        ###连接池最大空闲连接
-        max-idle: 5
-        ###连接池最小空闲连接
-        min-idle: 0
-    timeout: 10000
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    password:
+#    jedis:
+#      pool:
+#        ###连接池最大连接数
+#        max-active: 8
+#        ###连接池最大阻塞等待时间
+#        max-wait: 10000
+#        ###连接池最大空闲连接
+#        max-idle: 5
+#        ###连接池最小空闲连接
+#        min-idle: 0
+#    timeout: 10000
   mail:
     host: smtp.qq.com
     port: 25
@@ -60,32 +60,35 @@ spring:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
         debug: true
-  kafka:
-    listener:
-      missing-topics-fatal: false
-    #kafka的服务器，有多少写多少
-    bootstrap-servers: 127.0.0.1:9092,127.0.0.1:9093
-
-    #生产者
-    producer: #默认全用String作为解析器
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    #消费者
-    consumer:
-      #分区ID 统一只有一个，如果分组ID不同，消息会两边都发，相同的分组会轮询发送
-      group-id: demo-groupid
-      #earliest如果该分区下的数据已经被读取，会从读取的位置开始读取数据，如果没有就从开头读取
-      #latest如果该分区下的数据已经被读取，会从读取的位置开始读取数据，如果没有就从最新的消息读取，这个好像会抛弃没读取的消息
-      auto-offset-reset: earliest
-      #读取数量 可以调整，但是别设置太高，要是系统崩溃没被读取完的数据就相当于抛弃了
-      max-poll-records: 1
-      #读完就提交，代表这消息已经结束了
-      enable-auto-commit: true
-      #因为用String作为序列化，所以用String作为反序列化
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#  kafka:
+#    listener:
+#      missing-topics-fatal: false
+#    #kafka的服务器，有多少写多少
+#    bootstrap-servers: 127.0.0.1:9092,127.0.0.1:9093
+#
+#    #生产者
+#    producer: #默认全用String作为解析器
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    #消费者
+#    consumer:
+#      #分区ID 统一只有一个，如果分组ID不同，消息会两边都发，相同的分组会轮询发送
+#      group-id: demo-groupid
+#      #earliest如果该分区下的数据已经被读取，会从读取的位置开始读取数据，如果没有就从开头读取
+#      #latest如果该分区下的数据已经被读取，会从读取的位置开始读取数据，如果没有就从最新的消息读取，这个好像会抛弃没读取的消息
+#      auto-offset-reset: earliest
+#      #读取数量 可以调整，但是别设置太高，要是系统崩溃没被读取完的数据就相当于抛弃了
+#      max-poll-records: 1
+#      #读完就提交，代表这消息已经结束了
+#      enable-auto-commit: true
+#      #因为用String作为序列化，所以用String作为反序列化
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   type-aliases-package: com.zzz.demo.entity
   mapper-locations:
     - classpath:mybatis/mapper/*.xml
+
+#logging:
+#  config: classpath:logback.xml

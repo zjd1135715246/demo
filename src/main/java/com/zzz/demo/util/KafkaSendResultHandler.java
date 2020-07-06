@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author zzz
  * @date 2020/5/14 19:14
  */
-@Component
+//@Component
 public class KafkaSendResultHandler implements ProducerListener {
 
     @Override

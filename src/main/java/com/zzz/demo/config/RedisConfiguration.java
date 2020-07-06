@@ -32,7 +32,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author zjd
  * @version 1.0.0
  */
-@Configuration
+//@Configuration
 @EnableCaching
 public class RedisConfiguration extends CachingConfigurerSupport {
 

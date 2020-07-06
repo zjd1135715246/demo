@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author zhangjiadong
  * @date 2020/5/27
  */
-@Component
+//@Component
 public class BatchListener {
 
     private static final Logger log= LoggerFactory.getLogger(BatchListener.class);

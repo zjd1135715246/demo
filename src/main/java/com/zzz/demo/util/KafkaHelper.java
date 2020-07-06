@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @author chenlingyu
  * @date 2020/5/14 19:05
  */
-@Component
+//@Component
 public class KafkaHelper {
 
     @Autowired

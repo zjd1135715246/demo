@@ -16,6 +16,8 @@ chmod +x ./test.sh  #使脚本具有执行权限
 
 ### shell变量
 
+==变量和等号间不能有空格==
+
 ```shell
 your_name="zzz.com"
 ```

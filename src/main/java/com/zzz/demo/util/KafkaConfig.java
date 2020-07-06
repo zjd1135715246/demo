@@ -20,8 +20,8 @@ import java.util.Map;
  * @author zhangjiadong
  * @date 2020/5/27
  */
-@Configuration
-@EnableKafka
+//@Configuration
+//@EnableKafka
 public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private  String HOST;

@@ -8,19 +8,19 @@
 
 ###### 更换repo：
 
-更换repo源：/etc/yum.repos.d
-           替换后：yum makecache
+更换repo源：`/etc/yum.repos.d`
+           替换后：`yum makecache`
 
 ###### 查看端口占用
 
-查看端口占用 netstat -aon|findstr "port"
+查看端口占用 `netstat -aon|findstr "port"`
 
-关闭占用端口的进程：taskkill /pid pid            (+/F强制关闭)
+关闭占用端口的进程：`taskkill /pid pid`            (+/F强制关闭)
 
 ###### 查看开放的端口
 
-查看所有开放的端口：netstat -ntpl
-开放端口：firewall-cmd --add-port=123/tcp --permanent
+查看所有开放的端口：`netstat -ntpl`
+开放端口：`firewall-cmd --add-port=123/tcp --permanent`
 刷新：   firewall-cmd --reload
 查看是否开启：firewall-cmd --query-port=123/tcp
 
@@ -34,6 +34,17 @@
 关闭setlinux:
     临时关闭:setenforce 0
     配置文件关闭: /etc/selinux/config  SELINUX=enforcing改为SELINUX=disabled
+
+###### 查看历史命令
+
+```
+#查看历史命令
+histroy
+#执行历史命令
+!对应的编号
+```
+
+
 
 ##### windows
 
@@ -56,21 +67,44 @@ start "" "G:\test\demo\src\main\resources\md"
 ###### 安装docker
 
 安装docker：
-    yum update
-    yum install -y yum-utils device-mapper-persistent-data lvm2
-    yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-    yum install docker-ce
+
+```
+yum update
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install docker-ce
+```
+
+
+
+​    
 
 ###### 安装docker-compose
 
 安装docker-compose：
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)"  -o /usr/local/bin/docker-compose
-    sudo mv /usr/local/bin/docker-compose /usr/bin/docker-compose
-    sudo chmod +x /usr/bin/docker-compose
+
+```shell
+sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)"  -o /usr/local/bin/docker-compose
+sudo mv /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo chmod +x /usr/bin/docker-compose
+
+#或者
+yum -y install epel-release
+yum -y install python-pip
+pip install docker-compose
+
+#或者
+sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.25.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+
+
+  
 
 ###### docker-compose启动    
 
-docker-compose启动：docker-compose up -d        
+docker-compose启动：`docker-compose up -d`
 
 拷贝文件：docker cp /opt/test.js testtomcat：/usr/local/tomcat/webapps/test/js
 
@@ -81,9 +115,66 @@ docker生成镜像：docker build -f (dockefile路径) .
 
 ###### 启动容器
 
-​    启动mysql:docker run -p 3307:3306 --name mysql_C -v /home/docker/mysql_C/my.conf:/etc/mysql/my.conf -v /home/docker/mysql_C/logs:/logs -v /home/docker/mysql_C/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0
-​    启动nginx:docker run -p 80:80 --name nginx -v /home/docker/nginx/conf.d:/etc/nginx/conf.d -d nginx
-​    启动redis:docker run -p 6379:6379 --name redis -v /home/docker/redis/data:/data -v /home/docker/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf  -d redis redis-server /usr/local/etc/redis/redis.conf/redis.conf --appendonly yes
+​    启动mysql:
+
+==这里需要提前在宿主机创建mysql的配置文件（my.cnf）==
+
+```
+docker run -p 3307:3306 --name mysql_C -v /home/docker/mysql_C/my.conf:/etc/mysql/my.conf -v /home/docker/mysql_C/logs:/logs -v /home/docker/mysql_C/data:/var/lib/mysql -v /home/docker/mysql/my.cnf:/etc/mysql/my.cnf  -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0
+```
+
+​    启动nginx:
+
+```
+docker run -p 80:80 --name nginx -v /home/docker/nginx/conf.d:/etc/nginx/conf.d -d nginx
+```
+
+​    启动redis:
+
+==这里需要提前在宿主机创建redis配置文件(redis.conf)==
+
+```
+docker run -d -p 6379:6379 --name redis -v /home/docker/redis/data:/data -v /home/docker/redis/conf/redis.conf/redis.conf:/usr/local/etc/redis/redis.conf/redis.conf  redis redis-server /usr/local/etc/redis/redis.conf/redis.conf --appendonly yes
+```
+
+
+
+kafka
+
+```
+version: '3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports: 
+    - 2181:2181
+  kafka1: 
+    image: wurstmeister/kafka
+    container_name: kafka1
+    ports: 
+    - 9092:9092
+    environment: 
+    - KAFKA_BROKER_ID=0
+    - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://122.112.199.65:9092
+    - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+  kafka2:
+    image: wurstmeister/kafka
+    container_name: kafka2
+    ports:
+    - 9093:9092
+    environment:
+    - KAFKA_BROKER_ID=1
+    - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://122.112.199.65:9093
+    - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+
+```
+
+
+
+
 
 
 
@@ -98,6 +189,13 @@ sudo tee /etc/docker/daemon.json <<-'EOF'
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+```
+
+###### 查看docker容器在本地运行的位置
+
+```
+docker inspect 容器名
+# MergeDir 对应的就是本地路径
 ```
 
 
@@ -118,37 +216,38 @@ grant all on *.* to 'zjd'@'%';
 
 mysql8.0配置文件
 ```# Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
-   #
-   # This program is free software; you can redistribute it and/or modify
-   # it under the terms of the GNU General Public License as published by
-   # the Free Software Foundation; version 2 of the License.
-   #
-   # This program is distributed in the hope that it will be useful,
-   # but WITHOUT ANY WARRANTY; without even the implied warranty of
-   # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   # GNU General Public License for more details.
-   #
-   # You should have received a copy of the GNU General Public License
-   # along with this program; if not, write to the Free Software
-   # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
    
-   #
-   # The MySQL  Server configuration file.
-   #
-   # For explanations see
-   # http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+#
+# The MySQL  Server configuration file.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
    
-   [mysqld]
-   pid-file        = /var/run/mysqld/mysqld.pid
-   socket          = /var/run/mysqld/mysqld.sock
-   datadir         = /var/lib/mysql
-   secure-file-priv= NULL
-   default_authentication_plugin=mysql_native_password
-   # Disabling symbolic-links is recommended to prevent assorted security risks
-   symbolic-links=0
+[mysqld]
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+secure-file-priv= NULL
+#更改加密方式
+default_authentication_plugin=mysql_native_password
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
    
-   # Custom config should go here
-   !includedir /etc/mysql/conf.d/
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
 
 ```
 
@@ -177,7 +276,11 @@ git push -u origin master
 	 查看所有注册topic：ls /brokers/topics  删除未标记的topic：rmr /brokers/topics/【topic name】
 	 查看标记已删除topic： ls /admin/delete_topics 删除已标记删除的topic：rmr /admin/delete_topics/【topic name】
 
+##### java
 
+启动jar
 
-
+```
+java -jar -agentlib:jdwp=transport=dt_socket server=y suspend=n address=1001 -Dspring.profiles.active=sit /apib.jar
+```
 

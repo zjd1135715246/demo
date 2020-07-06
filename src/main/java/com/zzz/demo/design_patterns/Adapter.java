@@ -5,7 +5,7 @@ package com.zzz.demo.design_patterns;
  * @Date 2020/6/27 9:29
  * @Created by zhangjiadong
  */
-public class adapter {
+public class Adapter {
 }
 
 //原有类
