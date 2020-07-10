@@ -44,6 +44,28 @@ histroy
 !对应的编号
 ```
 
+###### 安装jdk
+
+```
+#1.下载
+https://blog.csdn.net/WNsshssm/article/details/84315519
+wget http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz
+#配置环境变量
+vim /etc/profile
+#在最后添加
+export JAVA_HOME=/usr/local/jdk1.8.0_181  #jdk安装目录
+ 
+export JRE_HOME=${JAVA_HOME}/jre
+ 
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$CLASSPATH
+ 
+export JAVA_PATH=${JAVA_HOME}/bin:${JRE_HOME}/bin
+ 
+export PATH=$PATH:${JAVA_PATH}
+#刷新配置
+source /etc/profile
+```
+
 
 
 ##### windows
