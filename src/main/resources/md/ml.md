@@ -50,6 +50,8 @@ histroy
 #1.下载
 https://blog.csdn.net/WNsshssm/article/details/84315519
 wget http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz
+
+tar -zvxf jkd
 #配置环境变量
 vim /etc/profile
 #在最后添加
