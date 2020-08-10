@@ -222,6 +222,12 @@ docker inspect 容器名
 # MergeDir 对应的就是本地路径
 ```
 
+###### docker强制删除镜像
+
+```
+docker image rm -f 镜像id
+```
+
 
 
 ### redis
