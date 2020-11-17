@@ -1,4 +1,4 @@
-package com.zzz.demo.requestBean;
+package com.zzz.demo.request;
 
 public class OrderQueryBean {
 

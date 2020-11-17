@@ -51,7 +51,7 @@ myUrl="https://www.zzz.com"
 
 ##### 删除变量
 
-使用unset可以删除变量，但不得=能删除只读变量
+使用unset可以删除变量，但不能删除只读变量
 
 ```shell
 unset zzz_name

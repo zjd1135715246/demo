@@ -3,7 +3,7 @@ package com.zzz.demo.service;
 import com.zzz.demo.entity.Address;
 import com.zzz.demo.entity.FriendInfo;
 import com.zzz.demo.entity.User;
-import com.zzz.demo.reBack.RebackMessage;
+import com.zzz.demo.back.RebackMessage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

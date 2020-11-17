@@ -1,9 +1,8 @@
 package com.zzz.demo.util;
 
-import com.zzz.demo.reBack.GoodsReback;
+import com.zzz.demo.back.GoodsReback;
 import net.sf.json.JSONArray;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.LinkedList;

@@ -1,9 +1,8 @@
 package com.zzz.demo.dao;
 
 import com.zzz.demo.entity.*;
-import com.zzz.demo.reBack.FriendMessage;
+import com.zzz.demo.back.FriendMessage;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package com.zzz.demo.dao;
 
 import com.zzz.demo.entity.Goods;
 import com.zzz.demo.entity.MyCart;
-import com.zzz.demo.reBack.GoodsReback;
-import com.zzz.demo.reBack.OrderGoodsReback;
+import com.zzz.demo.back.GoodsReback;
+import com.zzz.demo.back.OrderGoodsReback;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

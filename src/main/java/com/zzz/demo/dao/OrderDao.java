@@ -3,7 +3,7 @@ package com.zzz.demo.dao;
 import com.zzz.demo.entity.MyCart;
 import com.zzz.demo.entity.Orders;
 import com.zzz.demo.entity.User;
-import com.zzz.demo.requestBean.OrderQueryBean;
+import com.zzz.demo.request.OrderQueryBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 

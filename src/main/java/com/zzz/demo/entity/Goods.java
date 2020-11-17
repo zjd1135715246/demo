@@ -1,10 +1,7 @@
 package com.zzz.demo.entity;
 
 
-import com.zzz.demo.reBack.GoodsReback;
-
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Goods {
 

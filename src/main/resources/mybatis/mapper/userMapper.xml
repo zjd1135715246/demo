@@ -14,7 +14,7 @@
 
 
 
-    <resultMap id="friends" type="com.zzz.demo.reBack.FriendMessage">
+    <resultMap id="friends" type="com.zzz.demo.back.FriendMessage">
         <id column="mainId" property="FriendId"></id>
         <result column="headImg" property="headImg"></result>
         <result column="nickName" property="nickName"></result>

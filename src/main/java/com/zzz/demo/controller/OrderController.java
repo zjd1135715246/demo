@@ -1,7 +1,7 @@
 package com.zzz.demo.controller;
 
-import com.zzz.demo.reBack.RebackMessage;
-import com.zzz.demo.requestBean.OrderGoodsBean;
+import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.request.OrderGoodsBean;
 import com.zzz.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

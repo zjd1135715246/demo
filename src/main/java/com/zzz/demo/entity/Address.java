@@ -1,5 +1,11 @@
 package com.zzz.demo.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+@Data
 
 public class Address {
 
@@ -11,7 +17,7 @@ public class Address {
   private String address;
   private String area;
   private Integer defaultAddress;
-
+  public static AtomicInteger atomicInteger = new AtomicInteger();
 
   public Integer getId() {
     return id;
@@ -94,4 +100,6 @@ public class Address {
     this.area = area;
     this.defaultAddress = defaultAddress;
   }
+
+  public Address(){}
 }

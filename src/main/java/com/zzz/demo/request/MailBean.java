@@ -1,4 +1,4 @@
-package com.zzz.demo.requestBean;
+package com.zzz.demo.request;
 
 import org.springframework.web.multipart.MultipartFile;
 

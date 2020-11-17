@@ -1,4 +1,4 @@
-package com.zzz.demo.reBack;
+package com.zzz.demo.back;
 
 import com.zzz.demo.entity.Chat;
 
