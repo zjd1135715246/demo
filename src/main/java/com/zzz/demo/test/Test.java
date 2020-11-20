@@ -14,16 +14,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Test {
 
     public static void main(String[] args) {
-        /*
         ThreadDemo threadDemo = new ThreadDemo();
         Thread thread = new Thread(threadDemo);
         thread.start();
         while (true){
-            if(threadDemo.isFlag()){
-                System.out.println("threadDemo flag 修改------为true");
-                break;
-            }
-        }*/
+                if(threadDemo.isFlag()){
+                    System.out.println("threadDemo flag 修改------为true");
+                    break;
+                }
+
+
+        }
         int[] nums = new int[]{1,5,8,7,6,9};
         int[] ints = twoSum(nums, 10);
         System.out.println(ints[0]+":"+ints[1]);
@@ -80,26 +81,5 @@ class AtomicDemo implements Runnable{
     }
 }
 
-class CreateDemo implements Runnable{
 
-    private final AtomicInteger atomicInteger = new AtomicInteger();
-    private Address create(){
-        Address address = new Address();
-        address.setId(0);
-        address.setUserId(0);
-        address.setName("aaa");
-        address.setMobile("aaa");
-        address.setAddressName("aaa");
-        address.setAddress("aaa");
-        address.setArea("aaa");
-        address.setDefault(0);
-        atomicInteger.getAndIncrement();
-        return address;
-    }
-    @Override
-    public void run() {
-        create();
-    }
-
-}
 
