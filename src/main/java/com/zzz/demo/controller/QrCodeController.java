@@ -1,11 +1,13 @@
 package com.zzz.demo.controller;
 
 import com.zzz.demo.util.QRCodeUtil;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/qrCode")
 @Controller
+@Api(value = "qrcode测试")
 public class QrCodeController {
 
 

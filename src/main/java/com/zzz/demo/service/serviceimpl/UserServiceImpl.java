@@ -3,10 +3,12 @@ package com.zzz.demo.service.serviceimpl;
 import com.zzz.demo.config.WebSocketServer;
 import com.zzz.demo.dao.UserDao;
 import com.zzz.demo.entity.*;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.service.UserService;
 import com.zzz.demo.util.OtherUtil;
 import com.zzz.demo.util.POJOSave;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.zookeeper.data.Stat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private CuratorFramework zkClient;
 
     @Override
     public List getUserDiscuss(Integer id) {
@@ -66,28 +71,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RebackMessage recharge(User user) {
+    public ReBackMessage recharge(User user) {
         try {
             userDao.recharge(user);
-            return new RebackMessage(0,"操作成功",null);
+            return new ReBackMessage(0,"操作成功",null);
         }catch (Exception e){
-            return new RebackMessage(500,"网络异常",null);
+            return new ReBackMessage(500,"网络异常",null);
         }
     }
 
     @Override
-    public RebackMessage getAddress(User user) {
+    public ReBackMessage getAddress(User user) {
         List list = new ArrayList();
         try {
             list = userDao.getAddress(user);
-            return new RebackMessage(200,"查询成功",list);
+            return new ReBackMessage(200,"查询成功",list);
         }catch (Exception e){
-            return new RebackMessage(500,"网络异常");
+            return new ReBackMessage(500,"网络异常");
         }
     }
 
     @Override
-    public RebackMessage addAddress(Address address, Integer type) {
+    public ReBackMessage addAddress(Address address, Integer type) {
         try {
             if(address.getDefault().equals(1)){
                 userDao.updateAddressDefault(address);
@@ -98,17 +103,17 @@ public class UserServiceImpl implements UserService {
                 //userDao.updateAddress(address);
                 POJOSave.savePOJO(address,type);
             }
-            return new RebackMessage(200,"添加成功");
+            return new ReBackMessage(200,"添加成功");
         }catch (Exception e){
             e.printStackTrace();
-            return new RebackMessage(500,"网络异常");
+            return new ReBackMessage(500,"网络异常");
         }
     }
 
     @Override
-    public RebackMessage getNowUserCoupon(User user) {
+    public ReBackMessage getNowUserCoupon(User user) {
         List<Coupon> list = userDao.getNowUserCoupon(user);
-        return new RebackMessage(200,"bingo",list);
+        return new ReBackMessage(200,"bingo",list);
     }
 
     @Override
@@ -130,24 +135,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RebackMessage findFriend(Integer id, Integer type) {
+    public ReBackMessage findFriend(Integer id, Integer type) {
         List list = new ArrayList<>();
         if(type==1){
          list= userDao.findFriend(id);
         }else {
             list= userDao.findStranger(id);
         }
-        return new RebackMessage(200,"成功",list);
+        return new ReBackMessage(200,"成功",list);
     }
 
     @Override
-    public RebackMessage addFriend(FriendInfo friendInfo) {
+    public ReBackMessage addFriend(FriendInfo friendInfo) {
         userDao.addFriend(friendInfo);
-        return new RebackMessage(200,"bingo");
+        return new ReBackMessage(200,"bingo");
     }
 
     @Override
-    public RebackMessage talkImg(String toUserId, String formUserId, MultipartFile file) {
+    public ReBackMessage talkImg(String toUserId, String formUserId, MultipartFile file) {
         String fileName = file.getOriginalFilename();
         fileName = System.currentTimeMillis()+fileName;
         //String filePath = "G:\\test\\xx\\o2\\";
@@ -159,22 +164,44 @@ public class UserServiceImpl implements UserService {
             file.transferTo(dest);
             WebSocketServer.sendInfo("{\"fromUserId\":\""+formUserId+"\",\"contentText\":\"2-http://47.56.162.197:2233/demo/upload/"+fileName+"\",\"toUserId\":\""+toUserId+"\"}",toUserId);
         }catch (Exception e){}
-        return new RebackMessage(200,"http://47.56.162.197:2233/demo/upload/"+fileName);
+        return new ReBackMessage(200,"http://47.56.162.197:2233/demo/upload/"+fileName);
     }
 
     @Override
     public void test() {
-        List<T1> list = new ArrayList<>();
-        for (int i = 0; i <100000 ; i++) {
-            T1 t1 = new T1();
-            t1.setName(String.valueOf(i));
-            list.add(t1);
-        }
-        long start = System.currentTimeMillis();
-        userDao.test(list);
-        long end = System.currentTimeMillis();
-        System.out.println(end-start);
+        try {
+            //创建节点(默认是永久节点),父节点不存在则报错
+            //String s = zkClient.create().forPath("/node1/node3");
 
+            //创建节点，父节点不存在则创建父节点 withMode:指定创建节点的类型
+            //zkClient.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/node1/node4");
+
+            //创建临时节点
+            //zkClient.create().creatingParentContainersIfNeeded().withMode(CreateMode.EPHEMERAL).forPath("/node1/epNode1");
+
+            //创建节点并指定内容
+            //zkClient.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/node1/node5","node5的内容是java".getBytes());
+            //获取节点内容
+            //byte[] node5 = zkClient.getData().forPath("/node1/node5");
+
+            //检测节点是否创建成功,成功则返回节点的stat，否则为null
+            //Stat stat = zkClient.checkExists().forPath("/node1/node5");
+
+            //删除一个子节点
+            //zkClient.delete().forPath("/node1/node2");
+
+            //删除一个节点及其下所有子节点
+            //zkClient.delete().deletingChildrenIfNeeded().forPath("/node2");
+
+            //更新节点内容
+            //zkClient.setData().forPath("/node1/node5","内容改变了".getBytes());
+
+            //获取节点的所有子节点路径
+            //List<String> list = zkClient.getChildren().forPath("/node1");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

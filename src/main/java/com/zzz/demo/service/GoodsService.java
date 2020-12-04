@@ -2,22 +2,22 @@ package com.zzz.demo.service;
 
 import com.zzz.demo.entity.Goods;
 import com.zzz.demo.entity.MyCart;
-import com.zzz.demo.back.GoodsReback;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.GoodsReBack;
+import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.request.OrderGoodsBean;
 
 public interface GoodsService {
     void saveData(String data);
 
-    RebackMessage goodsDetailed(Goods goods);
+    ReBackMessage goodsDetailed(Goods goods);
 
-    RebackMessage goodsList(Integer typeId, Integer pageSize, Integer currentPage, String searchName);
+    ReBackMessage goodsList(Integer typeId, Integer pageSize, Integer currentPage, String searchName);
 
-    RebackMessage myCart(OrderGoodsBean goodsBean);
+    ReBackMessage myCart(OrderGoodsBean goodsBean);
 
-    RebackMessage delCartOneGoods(Integer id);
+    ReBackMessage delCartOneGoods(Integer id);
 
-    RebackMessage addMyCart(MyCart cart);
+    ReBackMessage addMyCart(MyCart cart);
 
-    RebackMessage addGoods(GoodsReback goods);
+    ReBackMessage addGoods(GoodsReBack goods);
 }

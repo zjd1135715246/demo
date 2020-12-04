@@ -3,7 +3,7 @@ package com.zzz.demo.service;
 import com.zzz.demo.entity.Address;
 import com.zzz.demo.entity.FriendInfo;
 import com.zzz.demo.entity.User;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.ReBackMessage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -16,21 +16,21 @@ public interface UserService {
 
     List login(User user);
 
-    RebackMessage recharge(User user);
+    ReBackMessage recharge(User user);
 
-    RebackMessage getAddress(User user);
+    ReBackMessage getAddress(User user);
 
-    RebackMessage addAddress(Address address, Integer type);
+    ReBackMessage addAddress(Address address, Integer type);
 
-    RebackMessage getNowUserCoupon(User user);
+    ReBackMessage getNowUserCoupon(User user);
 
     void updateHeadImg(MultipartFile file, User user);
 
-    RebackMessage findFriend(Integer id, Integer type);
+    ReBackMessage findFriend(Integer id, Integer type);
 
-    RebackMessage addFriend(FriendInfo friendInfo);
+    ReBackMessage addFriend(FriendInfo friendInfo);
 
-    RebackMessage talkImg(String toUserId,String formUserId, MultipartFile file);
+    ReBackMessage talkImg(String toUserId, String formUserId, MultipartFile file);
 
     void test();
 }

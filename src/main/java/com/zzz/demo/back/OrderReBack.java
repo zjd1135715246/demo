@@ -12,7 +12,7 @@ public class OrderReBack {
     private BigDecimal price;
     private String memo;
     private Timestamp addTime;
-    private List<OrderGoodsReback> orderGoods;
+    private List<OrderGoodsReBack> orderGoods;
 
     public Timestamp getAddTime() {
         return addTime;
@@ -62,11 +62,11 @@ public class OrderReBack {
         this.memo = memo;
     }
 
-    public List<OrderGoodsReback> getOrderGoods() {
+    public List<OrderGoodsReBack> getOrderGoods() {
         return orderGoods;
     }
 
-    public void setOrderGoods(List<OrderGoodsReback> orderGoods) {
+    public void setOrderGoods(List<OrderGoodsReBack> orderGoods) {
         this.orderGoods = orderGoods;
     }
 }

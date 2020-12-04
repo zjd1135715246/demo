@@ -49,7 +49,6 @@ public class Swagger2 {
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .description("")
                 .termsOfServiceUrl("")
-                .contact("zjd")
                 .version("1.0")
                 .build();
     }

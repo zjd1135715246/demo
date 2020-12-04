@@ -6,7 +6,7 @@ import com.zzz.demo.entity.MyCart;
 import com.zzz.demo.entity.OrderGoods;
 import com.zzz.demo.entity.Orders;
 import com.zzz.demo.entity.User;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.request.OrderGoodsBean;
 import com.zzz.demo.request.OrderQueryBean;
 import com.zzz.demo.service.OrderService;
@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Override
-    public RebackMessage createOrder(String data) {
+    public ReBackMessage createOrder(String data) {
         JSONArray array =JSONArray.fromObject(data);
         List<OrderGoods> list = new ArrayList<>();
         List<MyCart> carts = new ArrayList<>();
@@ -64,14 +64,14 @@ public class OrderServiceImpl implements OrderService {
             orderDao.updateCoupon(orders.getCouponId());
         }
 
-        return new RebackMessage(200,"成功");
+        return new ReBackMessage(200,"成功");
     }
 
     @Override
-    public RebackMessage getOrders(OrderGoodsBean order) {
+    public ReBackMessage getOrders(OrderGoodsBean order) {
         List<Integer> pageList = OtherUtil.pageManager(order.getCurrentPage(),order.getPageSize());
         OrderQueryBean query = new OrderQueryBean(order.getUserId(),order.getStatus(),pageList.get(0),pageList.get(1));
         List result = orderDao.getOrders(query);
-        return new RebackMessage(200,"成功",result);
+        return new ReBackMessage(200,"成功",result);
     }
 }

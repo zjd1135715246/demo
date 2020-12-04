@@ -1,109 +1,41 @@
 package com.zzz.demo.entity;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+@ApiModel
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
 
+  @ApiModelProperty(value = "工人的id",name = "id")
   private Integer id;
+  @ApiModelProperty(value = "工人的id",name = "account")
   private String account;
+  @ApiModelProperty(value = "工人的id",name = "nickname")
   private String nickname;
+  @ApiModelProperty(value = "工人的id",name = "password")
   private String password;
+  @ApiModelProperty(value = "工人的id",name = "headImg")
   private String headImg;
+  @ApiModelProperty(value = "工人的id",name = "addtime")
   private Timestamp addtime;
+  @ApiModelProperty(value = "工人的id",name = "money")
   private BigDecimal money;
+  @ApiModelProperty(value = "工人的id",name = "couponTotal")
   private Integer couponTotal;
+  @ApiModelProperty(hidden = true)
   private List<com.zzz.demo.entity.Discuss> discusses;
 
-  public Integer getCouponTotal() {
-    return couponTotal;
-  }
-
-  public void setCouponTotal(Integer couponTotal) {
-    this.couponTotal = couponTotal;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public String getAccount() {
-    return account;
-  }
-
-  public void setAccount(String account) {
-    this.account = account;
-  }
-
-
-  public String getNickname() {
-    return nickname;
-  }
-
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
-
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-
-  public java.sql.Timestamp getAddtime() {
-    return addtime;
-  }
-
-  public void setAddtime(java.sql.Timestamp addtime) {
-    this.addtime = addtime;
-  }
-
-  public List<Discuss> getDiscusses() {
-    return discusses;
-  }
-
-  public void setDiscusses(List<Discuss> discusses) {
-    this.discusses = discusses;
-  }
-
-  public BigDecimal getMoney() {
-    return money;
-  }
-
-  public void setMoney(BigDecimal money) {
-    this.money = money;
-  }
-
-  public String getHeadImg() {
-    return headImg;
-  }
-
-  public void setHeadImg(String headImg) {
-    this.headImg = headImg;
-  }
-
-  public User(Integer id, String account, String nickname, String password, Timestamp addtime, List<Discuss> discusses, BigDecimal money,String headImg) {
-    this.id = id;
-    this.account = account;
-    this.nickname = nickname;
-    this.password = password;
-    this.addtime = addtime;
-    this.discusses = discusses;
-    this.money=money;
-    this.headImg=headImg;
-  }
-
-  public User() {
-  }
 }

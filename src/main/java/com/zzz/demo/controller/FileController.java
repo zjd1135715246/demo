@@ -1,7 +1,7 @@
 package com.zzz.demo.controller;
 
 import com.zzz.demo.entity.User;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.service.UserService;
 import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
@@ -90,7 +90,7 @@ public class FileController {
     }*/
 
     @PostMapping("/upLoadHeadImg")
-    public RebackMessage upLoadHeadImg(HttpServletRequest request) {
+    public ReBackMessage upLoadHeadImg(HttpServletRequest request) {
         User user = new User();
         user.setId(Integer.parseInt(request.getParameter("id")));
         MultipartRequest req = (MultipartRequest) request;
@@ -100,12 +100,12 @@ public class FileController {
     }
 
     @PostMapping("/talkImg")
-    public RebackMessage talkImg(HttpServletRequest request){
+    public ReBackMessage talkImg(HttpServletRequest request){
         String toUserId = request.getParameter("toUserId");
         String formUserId = request.getParameter("formUserId");
         MultipartRequest req = (MultipartRequest) request;
         MultipartFile file = req.getFile("file");
-        RebackMessage rebackMessage = userService.talkImg(toUserId,formUserId,file);
+        ReBackMessage rebackMessage = userService.talkImg(toUserId,formUserId,file);
         return  rebackMessage;
     }
 
