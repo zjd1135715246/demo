@@ -151,6 +151,65 @@ docker run -p 3307:3306 --name mysql_C -v /home/docker/mysql_C/my.conf:/etc/mysq
 
 ```
 docker run -p 80:80 --name nginx -v /home/docker/nginx/conf.d:/etc/nginx/conf.d -d nginx
+
+
+#nginx配置文件：
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$upstream_addr"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    upstream tomcat {
+        server 127.0.0.1:8080;
+        server 127.0.0.1:8080;
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            proxy_pass http://tomcat;
+            proxy_redirect off;
+            index index.html index.htm;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Real-Port $remote_port;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location /static/ {
+            alias /usr/share/nginx/html/;
+        }
+    }
+
+    include /etc/nginx/conf.d/*.conf;
+}
 ```
 
 ​    启动redis:
