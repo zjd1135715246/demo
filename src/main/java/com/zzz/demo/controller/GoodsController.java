@@ -2,8 +2,8 @@ package com.zzz.demo.controller;
 
 import com.zzz.demo.entity.Goods;
 import com.zzz.demo.entity.MyCart;
-import com.zzz.demo.back.GoodsReback;
-import com.zzz.demo.back.RebackMessage;
+import com.zzz.demo.back.GoodsReBack;
+import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.request.OrderGoodsBean;
 import com.zzz.demo.service.GoodsService;
 import io.swagger.annotations.Api;
@@ -17,18 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Api(value = "商品表操作控制器")
+
 @RestController()
 @RequestMapping("/goods")
+@Api(value = "商品")
 public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
 
     @PostMapping("/dataWrite")
-    public RebackMessage dataWrite(String data){
+    public ReBackMessage dataWrite(String data){
         goodsService.saveData(data);
-        return new RebackMessage(200);
+        return new ReBackMessage(200);
     }
 
     @ApiImplicitParams({
@@ -38,43 +39,43 @@ public class GoodsController {
             @ApiImplicitParam(paramType = "query",name = "goodsTypeId",value = "商品类型ID",dataType = "Integer",required = true),
     })
     @GetMapping("/goodsDetailed")
-    public RebackMessage goodsDetailed(Goods goods){
-        RebackMessage message = goodsService.goodsDetailed(goods);
+    public ReBackMessage goodsDetailed(Goods goods){
+        ReBackMessage message = goodsService.goodsDetailed(goods);
         return message;
     }
 
 
     @GetMapping("/goodsList")
-    public RebackMessage goodsList(HttpServletRequest request){
+    public ReBackMessage goodsList(HttpServletRequest request){
         Integer pageSize = Integer.parseInt(request.getParameter("pageSize"));
         Integer currentPage = Integer.parseInt(request.getParameter("currentPage"));
         Integer typeId = Integer.parseInt(request.getParameter("typeId"));
         String searchName = request.getParameter("searchName");
-        RebackMessage message = goodsService.goodsList(typeId,pageSize,currentPage,searchName);
+        ReBackMessage message = goodsService.goodsList(typeId,pageSize,currentPage,searchName);
         return message;
     }
 
     @GetMapping("/myCart")
-    public RebackMessage myCart(OrderGoodsBean goodsBean){
-        RebackMessage message = goodsService.myCart(goodsBean);
+    public ReBackMessage myCart(OrderGoodsBean goodsBean){
+        ReBackMessage message = goodsService.myCart(goodsBean);
         return message;
     }
 
     @GetMapping("/delCartOneGoods")
-    public RebackMessage delCartOneGoods(Integer id){
-        RebackMessage message = goodsService.delCartOneGoods(id);
+    public ReBackMessage delCartOneGoods(Integer id){
+        ReBackMessage message = goodsService.delCartOneGoods(id);
         return message;
     }
 
     @GetMapping("/addMyCart")
-    public RebackMessage addMyCart(MyCart cart){
-        RebackMessage message = goodsService.addMyCart(cart);
+    public ReBackMessage addMyCart(MyCart cart){
+        ReBackMessage message = goodsService.addMyCart(cart);
         return message;
     }
 
     @PostMapping("/addGoods")
-    public RebackMessage addGoods(GoodsReback goods){
-        RebackMessage message = goodsService.addGoods(goods);
+    public ReBackMessage addGoods(GoodsReBack goods){
+        ReBackMessage message = goodsService.addGoods(goods);
         return message;
     }
 }

@@ -1,5 +1,12 @@
 package com.zzz.demo.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderQueryBean {
 
     private Integer userId;
@@ -7,45 +14,4 @@ public class OrderQueryBean {
     private Integer nowTotal;
     private Integer total;
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getNowTotal() {
-        return nowTotal;
-    }
-
-    public void setNowTotal(Integer nowTotal) {
-        this.nowTotal = nowTotal;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public OrderQueryBean(Integer userId, Integer status, Integer nowTotal, Integer total) {
-        this.userId = userId;
-        this.status = status;
-        this.nowTotal = nowTotal;
-        this.total = total;
-    }
-
-    public OrderQueryBean() {
-    }
 }

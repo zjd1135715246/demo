@@ -151,6 +151,65 @@ docker run -p 3307:3306 --name mysql_C -v /home/docker/mysql_C/my.conf:/etc/mysq
 
 ```
 docker run -p 80:80 --name nginx -v /home/docker/nginx/conf.d:/etc/nginx/conf.d -d nginx
+
+
+#nginx配置文件：
+
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$upstream_addr"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    upstream tomcat {
+        server 127.0.0.1:8080;
+        server 127.0.0.1:8080;
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            proxy_pass http://tomcat;
+            proxy_redirect off;
+            index index.html index.htm;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Real-Port $remote_port;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location /static/ {
+            alias /usr/share/nginx/html/;
+        }
+    }
+
+    include /etc/nginx/conf.d/*.conf;
+}
 ```
 
 ​    启动redis:
@@ -328,11 +387,147 @@ git push -u origin master
 	 查看所有注册topic：ls /brokers/topics  删除未标记的topic：rmr /brokers/topics/【topic name】
 	 查看标记已删除topic： ls /admin/delete_topics 删除已标记删除的topic：rmr /admin/delete_topics/【topic name】
 
-##### java
+### java
 
 启动jar
 
 ```
 java -jar -agentlib:jdwp=transport=dt_socket server=y suspend=n address=1001 -Dspring.profiles.active=sit /apib.jar
+```
+
+### other
+
+```
+import com.intellij.database.model.DasTable
+import com.intellij.database.model.ObjectKind
+import com.intellij.database.util.Case
+import com.intellij.database.util.DasUtil
+
+import java.text.SimpleDateFormat
+
+/*
+ * Available context bindings:
+ *   SELECTION   Iterable<DasObject>
+ *   PROJECT     project
+ *   FILES       files helper
+ */
+
+packageName = "com.jkd.common.entity;"
+typeMapping = [
+        (~/(?i)tinyint|smallint|mediumint/)      : "Integer",
+        (~/(?i)int/)                             : "Long",
+        (~/(?i)bool|bit/)                        : "Boolean",
+        (~/(?i)float|double|decimal|real/)       : "Double",
+        (~/(?i)decimal/)                         : "BigDecimal",
+        (~/(?i)datetime|timestamp|date|time/)    : "Date",
+        (~/(?i)blob|binary|bfile|clob|raw|image/): "InputStream",
+        (~/(?i)/)                                : "String"
+]
+
+FILES.chooseDirectoryAndSave("Choose directory", "Choose where to store generated files") { dir ->
+    SELECTION.filter { it instanceof DasTable && it.getKind() == ObjectKind.TABLE }.each { generate(it, dir) }
+}
+
+def generate(table, dir) {
+    def className = javaName(table.getName(), true)
+    def fields = calcFields(table)
+    new File(dir, className + ".java").withPrintWriter { out -> generate(out, className,table.getName(), fields) }
+}
+
+def generate(out, className,tableName, fields) {
+    out.println "package $packageName"
+    out.println ""
+    out.println "import lombok.*;"
+    out.println "import com.baomidou.mybatisplus.annotation.IdType;"
+    out.println "import com.baomidou.mybatisplus.annotation.TableId;"
+    out.println "import com.baomidou.mybatisplus.annotation.TableField;"
+    out.println "import com.baomidou.mybatisplus.annotation.TableName;"
+    out.println ""
+    Set types = new HashSet()
+    fields.each() {
+        types.add(it.type)
+    }
+
+    if (types.contains("Date")) {
+        out.println "import java.util.Date;"
+    }
+
+    if (types.contains("InputStream")) {
+        out.println "import java.io.InputStream;"
+    }
+    if(types.contains("BigDecimal")){
+        out.println "import java.math.BigDecimal;"
+    }
+    out.println ""
+    out.println "/**"
+    out.println " *@author zzz"
+    out.println " *@date "+ new SimpleDateFormat("YYYY-MM-dd").format(new Date())+" "
+    out.println " */"
+    out.println ""
+    out.println "@Data"
+    out.println "@ToString"
+    out.println "@NoArgsConstructor"
+    out.println "@AllArgsConstructor"
+    out.println "@TableName(\"$tableName\")"
+    out.println "public class $className {"
+    out.println ""
+
+
+    fields.each() {
+        if (it.annos != "") out.println "  ${it.annos}"
+        if("id".equals(it.name))out.println "  @TableId(\n" +
+                "        value = \"id\",\n" +
+                "        type = IdType.AUTO\n" +
+                "  )"
+        out.println "  private ${it.type} ${it.name};"
+    }
+    out.println ""
+    out.println "//这里是为了方便mapper的sql编写"
+    out.print "//"
+    /*fields.each() {
+        out.println ""
+        out.println "  public ${it.type} get${it.name.capitalize()}() {"
+        out.println "    return ${it.name};"
+        out.println "  }"
+        out.println ""
+        out.println "  public void set${it.name.capitalize()}(${it.type} ${it.name}) {"
+        out.println "    this.${it.name} = ${it.name};"
+        out.println "  }"
+        out.println ""
+    }*/
+    fields.each() {
+        out.print "${it.realName}" + ","
+    }
+    out.println ""
+    out.print "//"
+    fields.each() {
+        out.print "#{"+ "${it.name}"+ "}" +","
+    }
+
+    out.println ""
+    out.println "}"
+}
+
+def calcFields(table) {
+    DasUtil.getColumns(table).reduce([]) { fields, col ->
+        def spec = Case.LOWER.apply(col.getDataType().getSpecification())
+        def typeStr = typeMapping.find { p, t -> p.matcher(spec).find() }.value
+        fields += [[
+                           realName : col.getName(),
+                           name : javaName(col.getName(), false),
+                           type : typeStr,
+                           annos: "@TableField(value = \" "+col.getName()+"\")"]]
+    }
+}
+
+def javaName(str, capitalize) {
+    def s = com.intellij.psi.codeStyle.NameUtil.splitNameIntoWords(str)
+            .collect { Case.LOWER.apply(it).capitalize() }
+            .join("")
+            .replaceAll(/[^\p{javaJavaIdentifierPart}[_]]/, "_")
+    capitalize || s.length() == 1? s : Case.LOWER.apply(s[0]) + s[1..-1]
+}
+
+
 ```
 

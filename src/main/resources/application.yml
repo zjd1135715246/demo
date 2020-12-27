@@ -13,13 +13,13 @@ spring:
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/jkd?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
-    devr:
-      type: com.alibaba.druid.pool.DruidDataSource
-      username: develop
-      password: jkd123
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/jkd?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
+#    devr:
+#      type: com.alibaba.druid.pool.DruidDataSource
+#      username: develop
+#      password: jkd123
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
     dynamic:
       druid:
         initial-size: 10

@@ -1,6 +1,6 @@
 package com.zzz.demo.util;
 
-import com.zzz.demo.back.GoodsReback;
+import com.zzz.demo.back.GoodsReBack;
 import net.sf.json.JSONArray;
 
 import java.lang.reflect.Field;
@@ -94,12 +94,12 @@ public class POJOSave {
         return sql;
     }
 
-    public static List<GoodsReback> savePOJOBatchSec(String data) {
+    public static List<GoodsReBack> savePOJOBatchSec(String data) {
         JSONArray array = JSONArray.fromObject(data);
-        List<GoodsReback> list = new LinkedList<>();
+        List<GoodsReBack> list = new LinkedList<>();
         for (int i = 0; i <array.size() ; i++) {
             Map map = (Map) array.get(i);
-            GoodsReback goods = new GoodsReback();
+            GoodsReBack goods = new GoodsReBack();
             goods.setPrice(BigDecimal.valueOf(Double.parseDouble((String) map.get("price"))));
             goods.setName((String) map.get("title"));
             goods.setEnsembleTypeId(1);
@@ -114,7 +114,7 @@ public class POJOSave {
     public static String savePOJOBatchTir(List list) {
         StringBuffer sb = new StringBuffer("declare @goodsId int ");
         list.stream().forEach(p->{
-            GoodsReback goods = (GoodsReback) p;
+            GoodsReBack goods = (GoodsReBack) p;
             sb.append("insert into goods(name,price,goodsTypeId) values (#{name},#{price},#{ensembleTypeId})");
         });
 
