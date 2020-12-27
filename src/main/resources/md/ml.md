@@ -200,6 +200,28 @@ services:
 
 
 
+```
+docker run --network=bridge --restart=always --name nacos -p 8848:8848 --env-file=/home/docker/nacos/env.list -v /home/docker/nacos/logs:/home/nacos/logs -v /home/docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties -d nacos/nacos-server:1.1.4
+
+docker run --network=host \
+--restart=always \
+--name nacos-02 -p 8849:8848 \
+--env-file=/home/docker/nacos2/env.list \
+-v /home/docker/nacos2/logs:/home/nacos/logs \
+-v /home/docker/nacos2/init.d/custom.properties:/home/nacos/init.d/custom.properties \
+-d nacos/nacos-server:1.1.4
+
+docker run --network=host \
+--restart=always \
+--name nacos-03 -p 8850:8848 \
+--env-file=/home/docker/nacos/env.list \
+-v /home/docker/nacos/logs:/home/nacos/logs \
+-v /home/docker/nacos3/init.d/custom.properties:/home/nacos/init.d/custom.properties \
+-d nacos/nacos-server:1.1.4
+```
+
+
+
 
 
 ###### 配置docker镜像
