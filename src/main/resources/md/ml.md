@@ -8,8 +8,15 @@
 
 ###### 更换repo：
 
-更换repo源：`/etc/yum.repos.d`
-           替换后：`yum makecache`
+更换repo源：```
+
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak 
+
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo 
+
+``/etc/yum.repos.d`
+
+​           替换后：`yum makecache`
 
 ###### 查看端口占用
 
@@ -150,7 +157,7 @@ docker run -p 3307:3306 --name mysql_C -v /home/docker/mysql_C/my.conf:/etc/mysq
 ​    启动nginx:
 
 ```
-docker run -p 80:80 --name nginx -v /home/docker/nginx/conf.d:/etc/nginx/conf.d -d nginx
+docker run -p 80:80 --name nginx -v /home/docker/nginx/nginx.conf:/etc/nginx/nginx.conf -d nginx
 
 
 #nginx配置文件：
@@ -183,7 +190,7 @@ http {
     keepalive_timeout  65;
 
     #gzip  on;
-
+#反向代理配置
     upstream tomcat {
         server 127.0.0.1:8080;
         server 127.0.0.1:8080;
@@ -209,6 +216,29 @@ http {
     }
 
     include /etc/nginx/conf.d/*.conf;
+    
+ #反向代理文件
+    autoindex on;# 显示目录
+	autoindex_exact_size on;# 显示文件大小
+	autoindex_localtime on;# 显示文件时间
+
+	server {
+		listen       1234 default_server;
+		listen       [::]:123 default_server;
+		server_name  _;
+		root         /share/;
+
+		location / {
+		}
+
+		error_page 404 /404.html;
+			location = /40x.html {
+		}
+
+		error_page 500 502 503 504 /50x.html;
+			location = /50x.html {
+		}
+	}
 }
 ```
 
@@ -255,7 +285,26 @@ services:
 
 ```
 
+###### nifi
 
+```
+docker run -d -p 8080:8080 --name nifi apache/nifi
+```
+
+###### vsftp
+
+```
+docker pull fauria/vsftpd 
+
+docker run -d -v /root/docker/ftp:/home/vsftpd \
+-p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
+-e FTP_USER=zzz -e FTP_PASS=zzz \
+-e PASV_ADDRESS=192.168.131.130 \
+-e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
+--name ftp --restart=always fauria/vsftpd
+
+
+```
 
 
 
