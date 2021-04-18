@@ -3,8 +3,11 @@ package com.zzz.demo.controller;
 import com.zzz.demo.entity.User;
 import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.service.UserService;
+import com.zzz.demo.util.ftp.UploadFtp;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 @Api(value = "文件下载")
 @RequestMapping("/file")
@@ -23,6 +27,9 @@ public class FileController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UploadFtp uploadFtp;
 
     @RequestMapping(value = "/download",method = RequestMethod.GET)
     public String downLoad(HttpServletResponse response,String fileName) throws UnsupportedEncodingException {
@@ -109,5 +116,14 @@ public class FileController {
         return  rebackMessage;
     }
 
+    @PostMapping("/upload")
+    @ApiOperation(value = "文件上传")
+    public void test(@RequestParam(value = "uploadFile", required = false) MultipartFile file) throws IOException {
+
+        String origName = "/" ;
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename()).toLowerCase(Locale.ENGLISH);
+        uploadFtp.storeByExtWithTime(origName,ext,String.valueOf(System.currentTimeMillis()),file.getInputStream());
+
+    }
 
 }

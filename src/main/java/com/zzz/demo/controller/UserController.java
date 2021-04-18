@@ -6,6 +6,7 @@ import com.zzz.demo.entity.User;
 import com.zzz.demo.back.ReBackMessage;
 import com.zzz.demo.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RequestMapping("/user")
 @RestController
-@Api(tags= "用户API")
+@Api(tags= {"用户API"})
 public class UserController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class UserController {
 
 
     @GetMapping("getUserDiscuss")
+    @ApiOperation(value = "查询")
     public List<User> getUserDiscuss(Integer id){
         List list = new ArrayList();
         list = userService.getUserDiscuss(id);
