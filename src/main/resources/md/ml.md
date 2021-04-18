@@ -17,6 +17,8 @@
 
 关闭占用端口的进程：`taskkill /pid pid`            (+/F强制关闭)
 
+lsof -i:[端口]
+
 ###### 查看开放的端口
 
 查看所有开放的端口：`netstat -ntpl`
