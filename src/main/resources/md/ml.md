@@ -531,3 +531,18 @@ def javaName(str, capitalize) {
 
 ```
 
+###### 添加桌面快捷方式
+
+```
+[Desktop Entry]
+Name=IntelliJ IDEA
+Comment=IntelliJ IDEA
+Exec=/usr/data/idea/ideaIU-2020.3.1/idea/bin/idea.sh
+Icon=/usr/data/idea/ideaIU-2020.3.1/idea/bin/idea.png
+Terminal=false
+Type=Application
+Categories=Developer;
+##
+sudo chmod +x idea.desktop
+```
+
