@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @ApiModel
@@ -30,7 +32,8 @@ public class User {
   @ApiModelProperty(value = "工人的id",name = "headImg")
   private String headImg;
   @ApiModelProperty(value = "工人的id",name = "addtime")
-  private Timestamp addtime;
+  @DateTimeFormat(pattern = "yyyy-mm-dd")
+  private Date addtime;
   @ApiModelProperty(value = "工人的id",name = "money")
   private BigDecimal money;
   @ApiModelProperty(value = "工人的id",name = "couponTotal")
