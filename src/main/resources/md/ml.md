@@ -311,6 +311,8 @@ docker run -d -v /root/docker/ftp:/home/vsftpd \
 
 
 ```
+docker run --env MODE=standalone --name nacos -d -p 8848:8848 nacos/nacos-server
+
 docker run --network=bridge --restart=always --name nacos -p 8848:8848 --env-file=/home/docker/nacos/env.list -v /home/docker/nacos/logs:/home/nacos/logs -v /home/docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties -d nacos/nacos-server:1.1.4
 
 docker run --network=host \
