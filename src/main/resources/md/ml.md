@@ -308,6 +308,35 @@ docker run -d -v /root/docker/ftp:/home/vsftpd \
 
 ```
 
+###### gitlab
+
+```
+docker pull gitlab/gitlab-ce
+docker run -d  -p 1443:443 -p 180:80 -p 1222:22 --name gitlab  -v /usr/data/docker/gitlab/config:/etc/gitlab -v /usr/data/docker/gitlab/logs:/var/log/gitlab -v /usr/data/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce
+
+vim /usr/data/docker/gitlab/config/gitlab.rb
+	external_url 'http://localhost'
+	
+
+vim /usr/data/docker/gitlab/data/gitlab-rails/etc/gitlab.yml
+	host: localhost
+	port: 180
+```
+
+###### jenkins
+
+```
+docker pull jenkins/jenkins
+docker run -d -p 10240:8080 -p 10241:50000 -v /usr/data/docker/jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins jenkins/jenkins
+
+cd /usr/data/docker/jenkins
+# sed -i 's/www.google.com/www.baidu.com/g' default.json
+# sed -i 's/updates.jenkins-ci.org\/download/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
+
+```
+
+
+
 
 
 ```
