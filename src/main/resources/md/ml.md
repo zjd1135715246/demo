@@ -133,6 +133,18 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 
 
+######  修改镜像本地存储位置
+
+```shell
+cd /etc/systemd/system/multi-user.target.wants
+vim docker.service
+ExecStart=/usr/bin/dockerd --graph=/usr/data/docker
+
+#加上    --graph=/usr/data/docker
+```
+
+
+
   
 
 ###### docker-compose启动    
@@ -476,6 +488,25 @@ git push -u origin master
 ```
 java -jar -agentlib:jdwp=transport=dt_socket server=y suspend=n address=1001 -Dspring.profiles.active=sit /apib.jar
 ```
+
+
+
+### 安装node
+
+```
+#下载 tar包解压
+
+创建软连接
+
+ln -s /usr/data/node/bin/node /usr/local/bin
+
+ln -s /usr/data/node/bin/npm /usr/local/bin
+
+```
+
+
+
+
 
 ### other
 
