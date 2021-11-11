@@ -95,6 +95,14 @@ start "" "G:\test\demo\src\main\resources\md"
 
 
 
+##### mac
+
+
+
+
+
+
+
 ### docker
 
 ###### 安装docker
@@ -483,10 +491,10 @@ git push -u origin master
 
 ### java
 
-启动jar
-
 ```
 java -jar -agentlib:jdwp=transport=dt_socket server=y suspend=n address=1001 -Dspring.profiles.active=sit /apib.jar
+
+远程debug：-Xdebug -Xrunjdwp:transport=dt_socket,address=9527,server=y,suspend=n
 ```
 
 
