@@ -355,7 +355,21 @@ cd /usr/data/docker/jenkins
 
 ```
 
+###### minio
 
+```
+
+docker pull minio/minio
+#docker pull minio/minio:RELEASE.2022-06-20T23-13-45Z.fips
+
+docker run -d -p 9000:9000 -p 9090:9090 --name minio \
+-e "MINIO_ROOT_USER=admin" \
+-e "MINIO_ROOT_PASSWORD=12345678" \
+-v /opt/docker/minio/data:/data \
+minio/minio server --console-address ":9090" /data
+
+账号长度必须大于等于5，密码长度必须大于等于8位）
+```
 
 
 
