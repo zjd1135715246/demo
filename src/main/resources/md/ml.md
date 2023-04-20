@@ -485,11 +485,8 @@ symbolic-links=0
 将现有项目和github关联：
 
 ```
-git init
-git add .
-git commit -m ‘提交说明’
+
 git remote add origin 远程仓库地址
-git push -u origin master
 ```
 
 
